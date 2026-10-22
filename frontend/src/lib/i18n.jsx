@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 const T = {
   en: {
     home: 'Home', upload: 'Upload file', analyses: 'Analysis', forecast: 'Forecast', chat: 'Chat with your data',
-    documents: 'Documents', actions: 'Action plan', alerts: 'Alerts', signOut: 'Log out',
+    documents: 'Documents', actions: 'Action plan', alerts: 'Alerts', contact: 'Contact us', signOut: 'Log out',
     email: 'Email', password: 'Password', fullName: 'Full name', logIn: 'Log in', signUp: 'Create account',
     forgotPassword: 'Forgot password?', sendReset: 'Send reset link', newPassword: 'New password',
     saveNewPassword: 'Save new password', continueGoogle: 'Continue with Google', noAccount: 'No account yet?',
@@ -17,7 +17,7 @@ const T = {
   },
   hi: {
     home: 'होम', upload: 'फ़ाइल अपलोड', analyses: 'विश्लेषण', forecast: 'पूर्वानुमान', chat: 'डेटा से बात करें',
-    documents: 'दस्तावेज़', actions: 'कार्य योजना', alerts: 'अलर्ट', signOut: 'लॉग आउट',
+    documents: 'दस्तावेज़', actions: 'कार्य योजना', alerts: 'अलर्ट', contact: 'संपर्क करें', signOut: 'लॉग आउट',
     email: 'ईमेल', password: 'पासवर्ड', fullName: 'पूरा नाम', logIn: 'लॉग इन करें', signUp: 'खाता बनाएँ',
     forgotPassword: 'पासवर्ड भूल गए?', sendReset: 'रीसेट लिंक भेजें', newPassword: 'नया पासवर्ड',
     saveNewPassword: 'नया पासवर्ड सहेजें', continueGoogle: 'Google से जारी रखें', noAccount: 'खाता नहीं है?',
@@ -31,7 +31,7 @@ const T = {
   },
   hinglish: {
     home: 'Home', upload: 'File upload', analyses: 'Analysis', forecast: 'Forecast', chat: 'Data se baat karein',
-    documents: 'Documents', actions: 'Action plan', alerts: 'Alerts', signOut: 'Log out',
+    documents: 'Documents', actions: 'Action plan', alerts: 'Alerts', contact: 'Contact us', signOut: 'Log out',
     email: 'Email', password: 'Password', fullName: 'Poora naam', logIn: 'Log in karein', signUp: 'Account banayein',
     forgotPassword: 'Password bhool gaye?', sendReset: 'Reset link bhejein', newPassword: 'Naya password',
     saveNewPassword: 'Naya password save karein', continueGoogle: 'Google se continue karein', noAccount: 'Account nahi hai?',

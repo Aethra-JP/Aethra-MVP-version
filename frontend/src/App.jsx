@@ -14,11 +14,31 @@ import Chat from './pages/Chat'
 import Documents from './pages/Documents'
 import Actions from './pages/Actions'
 import Alerts from './pages/Alerts'
+import Landing from './pages/Landing'
+import Contact from './pages/Contact'
+import PublicShell from './components/PublicShell'
 
 function Protected({ children }) {
   const { session, booting } = useApp()
   if (booting) return <div className="p-10 muted">Loading...</div>
   return session ? children : <Navigate to="/login" replace />
+}
+
+function Splash() {
+  return <div className="min-h-screen grid place-items-center muted">Loading...</div>
+}
+
+// Visitors see the landing page at "/"; signed-in users see their home screen there.
+function Root() {
+  const { session, booting } = useApp()
+  if (booting) return <Splash />
+  return session ? <Layout><Home /></Layout> : <Landing />
+}
+
+function ContactRoute() {
+  const { session, booting } = useApp()
+  if (booting) return <Splash />
+  return session ? <Layout><Contact /></Layout> : <PublicShell><Contact /></PublicShell>
 }
 
 export default function App() {
@@ -32,12 +52,13 @@ export default function App() {
   }
   return (
     <Routes>
+      <Route path="/" element={<Root />} />
+      <Route path="/contact" element={<ContactRoute />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<Protected><Layout /></Protected>}>
-        <Route path="/" element={<Home />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/analyses" element={<Analyses />} />
         <Route path="/forecast" element={<Forecast />} />
