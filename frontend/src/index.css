@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { background: #000; color: #efe9da; }
+  body { @apply font-body text-[16px] leading-relaxed bg-ink text-paper; }
+  h1, h2, h3 { @apply font-display; }
+  h1 { @apply text-3xl font-bold tracking-tight; }
+  h2 { @apply text-xl font-bold; }
+  :focus-visible { outline: 2px solid #e8c97a; outline-offset: 2px; }
+  ::selection { background: #c9a24d; color: #000; }
+}
+
+@layer components {
+  .card { @apply bg-surface border border-line rounded-lg p-5; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md bg-gold text-ink font-bold px-4 py-2 hover:bg-gold-bright disabled:opacity-50 disabled:cursor-not-allowed transition-colors; }
+  .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-md border border-line text-paper px-4 py-2 hover:border-gold hover:text-gold-bright disabled:opacity-50 disabled:cursor-not-allowed transition-colors; }
+  .input { @apply w-full rounded-md bg-ink border border-line px-3 py-2 text-paper placeholder:text-muted focus:border-gold; }
+  .label { @apply block text-sm text-muted mb-1; }
+  .muted { @apply text-muted text-sm; }
+  .pill { @apply inline-block rounded-full border border-line px-2.5 py-0.5 text-xs text-muted; }
+  .err { @apply rounded-md border border-bad/60 bg-bad/10 text-bad px-3 py-2 text-sm; }
+  .okbox { @apply rounded-md border border-good/50 bg-good/10 text-good px-3 py-2 text-sm; }
+}

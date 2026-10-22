@@ -1,0 +1,16 @@
+# Secrets: real keys live ONLY in these files, which Git must never upload
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env
+
+# Dependencies, builds, caches
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.vercel/
+.netlify/
