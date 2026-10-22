@@ -1,3 +1,8 @@
-// The logo file lives in frontend/public/logo.png (create the "public" folder if it does not exist).
-// To change the logo later, replace that file, or change the name here.
-export const LOGO_SRC = '/logo.png'
+// Brand images live in frontend/public (create that folder if it does not exist):
+//   logo.png       full logo (dotted A + AETHRA wordmark), transparent background, for large spaces
+//   logo-mark.png  bolder version of the A only, readable at small sizes (header, sidebar, 3D hero)
+//   favicon.png    browser tab icon
+// To change the logo later, replace these files.
+export const LOGO_FULL = '/logo.png'
+export const LOGO_MARK = '/logo-mark.png'
+export const FAVICON = '/favicon.png'

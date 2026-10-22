@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom'
-import { LOGO_SRC } from '../content/brand'
+import { LOGO_MARK } from '../content/brand'
 
-// The logo file is set in src/content/brand.js (frontend/public/logo.png).
+// Mark image + a wide-tracked AETHRA wordmark in the same style as the logo (live text stays sharp at any size).
 export default function Logo({ size = 36, text = true, to = '/', className = '' }) {
   const inner = (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <img src={LOGO_SRC} alt="" width={size} height={size} style={{ filter: 'drop-shadow(0 6px 10px rgba(0,0,0,.7)) drop-shadow(0 0 12px rgba(201,162,77,.25))' }} />
+      <img src={LOGO_MARK} alt="" width={size} height={size}
+        style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(201,162,77,.35))' }} />
       {text && (
-        <span className="font-display font-bold text-xl tracking-tight text-paper leading-none">
-          Aethra <span className="gold-text">AI</span>
+        <span className="leading-none">
+          <span className="font-display font-medium text-[1.05rem] tracking-[0.34em] text-gold-bright">AETHRA</span>
+          <span className="ml-2 text-[0.65rem] tracking-[0.2em] text-muted align-top">AI</span>
         </span>
       )}
     </span>

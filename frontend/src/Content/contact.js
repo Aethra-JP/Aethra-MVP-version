@@ -1,4 +1,4 @@
-// Edit these to change what the Contact page shows. Leave a value empty ('') to hide it.
+﻿// Edit these to change what the Contact page shows. Leave a value empty ('') to hide it.
 export const contact = {
   email: 'aethra.ai.team@gmail.com',
   phone: '',

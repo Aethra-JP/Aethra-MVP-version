@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { LOGO_SRC } from '../content/brand'
+import { LOGO_MARK } from '../content/brand'
 
 const BARS = [38, 46, 41, 55, 50, 62, 58, 71, 66, 92, 100, 78] // sample shape only: a festive bump in the middle
 const HOT = [9, 10]
@@ -41,7 +41,7 @@ export default function Hero3D() {
             <div className="font-bold mt-1 leading-snug">Stock up before the festive season</div>
             <div className="text-xs text-gold-bright mt-1">Estimated gain about ₹44,000</div>
           </div>
-          <img className="coin animate-bob" src={LOGO_SRC} alt="" />
+          <img className="coin animate-bob" src={LOGO_MARK} alt="" />
         </div>
       </div>
     </div>
