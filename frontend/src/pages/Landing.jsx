@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Hero3D from '../components/Hero3D'
+import LegalSection from '../components/LegalSection'
 import PublicShell from '../components/PublicShell'
 import { landing as L } from '../content/landing'
 
@@ -114,6 +115,8 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      <LegalSection className="max-w-4xl mx-auto px-5 pt-20" />
     </PublicShell>
   )
 }

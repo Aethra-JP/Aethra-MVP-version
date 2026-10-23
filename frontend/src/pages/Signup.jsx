@@ -5,6 +5,7 @@ import GoogleButton from '../components/GoogleButton'
 import { useApp } from '../lib/AppContext'
 import { useI18n } from '../lib/i18n'
 import { supabase } from '../lib/supabase'
+import { LEGAL_VERSION } from '../content/legal'
 import { friendly } from './Login'
 
 export default function Signup() {
@@ -16,16 +17,18 @@ export default function Signup() {
   const [stage, setStage] = useState('form') // form | verify | exists
   const [wait, setWait] = useState(0)
   const [busy, setBusy] = useState(false)
+  const [agree, setAgree] = useState(false)
   useEffect(() => { if (wait > 0) { const id = setTimeout(() => setWait(wait - 1), 1000); return () => clearTimeout(id) } }, [wait])
   if (session) return <Navigate to="/" replace />
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
   const submit = async (e) => {
     e.preventDefault(); setErr('')
+    if (!agree) return setErr('Please accept the Terms and Conditions to create your account.')
     if (f.password.length < 8) return setErr('Use at least 8 characters for your password.')
     setBusy(true)
     const { data, error } = await supabase.auth.signUp({
       email: f.email, password: f.password,
-      options: { data: { full_name: f.name }, emailRedirectTo: window.location.origin },
+      options: { data: { full_name: f.name, terms_accepted_at: new Date().toISOString(), terms_version: LEGAL_VERSION }, emailRedirectTo: window.location.origin },
     })
     setBusy(false)
     if (error) return setErr(friendly(error.message))
@@ -69,7 +72,12 @@ export default function Signup() {
         <div><label className="label" htmlFor="n">{t('fullName')}</label><input id="n" className="input" value={f.name} onChange={set('name')} autoComplete="name" /></div>
         <div><label className="label" htmlFor="e">{t('email')}</label><input id="e" type="email" required className="input" value={f.email} onChange={set('email')} autoComplete="email" /></div>
         <div><label className="label" htmlFor="p">{t('password')}</label><input id="p" type="password" required className="input" value={f.password} onChange={set('password')} autoComplete="new-password" /></div>
-        <button className="btn w-full" disabled={busy}>{busy ? t('loading') : t('signUp')}</button>
+        <label className="flex items-start gap-3 cursor-pointer select-none">
+          <input type="checkbox" required checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#c9a24d]" />
+          <span className="text-sm">I agree to the{' '}
+            <a className="text-gold underline" href="/#terms" target="_blank" rel="noopener noreferrer">Terms and Conditions</a></span>
+        </label>
+        <button className="btn w-full" disabled={busy || !agree}>{busy ? t('loading') : t('signUp')}</button>
       </form>
       <div className="my-5 flex items-center gap-3 muted"><span className="flex-1 border-t border-line" />or<span className="flex-1 border-t border-line" /></div>
       <GoogleButton />

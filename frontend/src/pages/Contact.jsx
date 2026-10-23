@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { api } from '../lib/api'
 import { useApp } from '../lib/AppContext'
+import LegalSection from '../components/LegalSection'
 import { contact } from '../content/contact'
 
 const KINDS = [['suggestion', 'Suggestion'], ['bug', 'Report a bug'], ['other', 'Something else']]
@@ -69,6 +70,7 @@ export default function Contact() {
           <button className="btn" disabled={state.busy}>{state.busy ? 'Sending...' : 'Send message'}</button>
         </form>
       </div>
+      <LegalSection className="mt-16" />
     </div>
   )
 }
