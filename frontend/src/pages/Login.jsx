@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import AuthShell from '../components/AuthShell'
 import GoogleButton from '../components/GoogleButton'
 import { useApp } from '../lib/AppContext'
@@ -16,6 +16,7 @@ export default function Login() {
   const { t } = useI18n()
   const { session } = useApp()
   const nav = useNavigate()
+  const notice = useLocation().state?.notice
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [err, setErr] = useState('')
@@ -38,6 +39,7 @@ export default function Login() {
   return (
     <AuthShell title={t('logIn')} footer={<>{t('noAccount')} <Link className="text-gold underline" to="/signup">{t('signUp')}</Link></>}>
       <form onSubmit={submit} className="space-y-4">
+        {notice && !err && <div className="okbox" role="status">{notice}</div>}
         {err && <div className="err" role="alert">{err}</div>}
         {info && <div className="okbox" role="status">{info}</div>}
         {needsConfirm && <button type="button" className="btn-ghost w-full" onClick={resend}>Resend confirmation email</button>}

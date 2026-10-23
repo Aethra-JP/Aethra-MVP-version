@@ -11,7 +11,7 @@ import { friendly } from './Login'
 export default function Signup() {
   const { t } = useI18n()
   const { session } = useApp()
-  const [f, setF] = useState({ name: '', email: '', password: '' })
+  const [f, setF] = useState({ name: '', email: '', password: '', confirm: '' })
   const [err, setErr] = useState('')
   const [info, setInfo] = useState('')
   const [stage, setStage] = useState('form') // form | verify | exists
@@ -25,6 +25,7 @@ export default function Signup() {
     e.preventDefault(); setErr('')
     if (!agree) return setErr('Please accept the Terms and Conditions to create your account.')
     if (f.password.length < 8) return setErr('Use at least 8 characters for your password.')
+    if (f.password !== f.confirm) return setErr('Passwords do not match. Please type the same password in both fields.')
     setBusy(true)
     const { data, error } = await supabase.auth.signUp({
       email: f.email, password: f.password,
@@ -72,6 +73,7 @@ export default function Signup() {
         <div><label className="label" htmlFor="n">{t('fullName')}</label><input id="n" className="input" value={f.name} onChange={set('name')} autoComplete="name" /></div>
         <div><label className="label" htmlFor="e">{t('email')}</label><input id="e" type="email" required className="input" value={f.email} onChange={set('email')} autoComplete="email" /></div>
         <div><label className="label" htmlFor="p">{t('password')}</label><input id="p" type="password" required className="input" value={f.password} onChange={set('password')} autoComplete="new-password" /></div>
+        <div><label className="label" htmlFor="p2">{t('confirmPassword')}</label><input id="p2" type="password" required className="input" value={f.confirm} onChange={set('confirm')} autoComplete="new-password" /></div>
         <label className="flex items-start gap-3 cursor-pointer select-none">
           <input type="checkbox" required checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-1 h-5 w-5 shrink-0 accent-[#c9a24d]" />
           <span className="text-sm">I agree to the{' '}
