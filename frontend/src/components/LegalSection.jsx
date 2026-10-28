@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { LEGAL_EMAIL, legalDocs } from '../Content/legal'
+import { LEGAL_EMAIL, legalDocs } from '../content/legal'
 
 // Turns the support email inside a paragraph into a mailto link.
 function withEmailLink(text) {
