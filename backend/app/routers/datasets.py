@@ -74,3 +74,19 @@ def get_one(dataset_id: str, user=Depends(current_user)):
     ds = get_dataset(dataset_id, user)
     p = sb().table("dataset_profiles").select("*").eq("dataset_id", dataset_id).limit(1).execute().data
     return {"dataset": ds, "profile": p[0] if p else None}
+
+
+@router.delete("/{dataset_id}")
+def delete_dataset(dataset_id: str, user=Depends(current_user)):
+    """Remove one uploaded file with everything made from it (reports, forecasts, history, actions)."""
+    ds = get_dataset(dataset_id, user)
+    ids = [a["id"] for a in sb().table("analyses").select("id").eq("dataset_id", ds["id"]).execute().data]
+    if ids:
+        sb().table("actions").delete().in_("analysis_id", ids).execute()
+    paths = [p for p in (ds.get("storage_path"), ds.get("clean_path")) if p]
+    try:
+        sb().storage.from_("datasets").remove(paths)
+    except Exception:
+        pass  # a missing file must not stop the record from being removed
+    sb().table("datasets").delete().eq("id", ds["id"]).execute()
+    return {"ok": True}

@@ -15,6 +15,7 @@ import Documents from './pages/Documents'
 import Actions from './pages/Actions'
 import Alerts from './pages/Alerts'
 import Landing from './pages/Landing'
+import EmailConfirmed from './pages/EmailConfirmed'
 import Contact from './pages/Contact'
 import PublicShell from './components/PublicShell'
 
@@ -55,6 +56,7 @@ export default function App() {
       <Route path="/" element={<Root />} />
       <Route path="/contact" element={<ContactRoute />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/email-confirmed" element={<EmailConfirmed />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />

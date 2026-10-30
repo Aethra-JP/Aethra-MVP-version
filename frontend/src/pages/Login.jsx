@@ -32,7 +32,7 @@ export default function Login() {
   }
   const resend = async () => {
     setErr(''); setInfo('')
-    const { error } = await supabase.auth.resend({ type: 'signup', email, options: { emailRedirectTo: window.location.origin } })
+    const { error } = await supabase.auth.resend({ type: 'signup', email, options: { emailRedirectTo: `${window.location.origin}/email-confirmed` } })
     if (error) setErr(/rate|too many|seconds/i.test(error.message) ? 'Please wait a minute before asking for another email.' : friendly(error.message))
     else setInfo('Confirmation email sent. Check your inbox and spam folder.')
   }

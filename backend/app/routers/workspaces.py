@@ -1,10 +1,11 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from ..auth import current_user, require_member
 from ..db import sb
+from .common import purge_folder
 
 router = APIRouter(prefix="/workspaces", tags=["workspaces"])
 
@@ -36,3 +37,17 @@ def list_workspaces(user=Depends(current_user)):
 def periods(workspace_id: str, user=Depends(current_user)):
     require_member(workspace_id, user)
     return sb().table("periods").select("*").eq("workspace_id", workspace_id).order("end_date").execute().data
+
+
+@router.delete("/{workspace_id}")
+def delete_workspace(workspace_id: str, user=Depends(current_user)):
+    """Remove a business and everything inside it. Only its owner may do this."""
+    m = (sb().table("workspace_members").select("role").eq("workspace_id", workspace_id)
+         .eq("user_id", user["id"]).limit(1).execute().data)
+    if not m:
+        raise HTTPException(403, "You do not have access to this business.")
+    if m[0]["role"] != "owner":
+        raise HTTPException(403, "Only the owner can remove this business.")
+    files = purge_folder("datasets", workspace_id) + purge_folder("documents", workspace_id)
+    sb().table("workspaces").delete().eq("id", workspace_id).execute()  # related rows are removed with it by the database
+    return {"ok": True, "files_removed": files}

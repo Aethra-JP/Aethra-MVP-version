@@ -29,7 +29,7 @@ export default function Signup() {
     setBusy(true)
     const { data, error } = await supabase.auth.signUp({
       email: f.email, password: f.password,
-      options: { data: { full_name: f.name, terms_accepted_at: new Date().toISOString(), terms_version: LEGAL_VERSION }, emailRedirectTo: window.location.origin },
+      options: { data: { full_name: f.name, terms_accepted_at: new Date().toISOString(), terms_version: LEGAL_VERSION }, emailRedirectTo: `${window.location.origin}/email-confirmed` },
     })
     setBusy(false)
     if (error) return setErr(friendly(error.message))
@@ -39,7 +39,7 @@ export default function Signup() {
   }
   const resend = async () => {
     setErr(''); setInfo('')
-    const { error } = await supabase.auth.resend({ type: 'signup', email: f.email, options: { emailRedirectTo: window.location.origin } })
+    const { error } = await supabase.auth.resend({ type: 'signup', email: f.email, options: { emailRedirectTo: `${window.location.origin}/email-confirmed` } })
     if (error) setErr(/rate|too many|seconds/i.test(error.message) ? 'Please wait a minute before asking for another email.' : friendly(error.message))
     else { setInfo('Sent again. Check your inbox and spam folder.'); setWait(45) }
   }

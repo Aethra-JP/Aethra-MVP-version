@@ -18,6 +18,25 @@ def get_dataset(dataset_id: str, user: dict) -> dict:
     return ds
 
 
+def purge_folder(bucket: str, folder: str) -> int:
+    """Delete every file stored under <folder>/ in a storage bucket. Best effort: returns how many were removed."""
+    removed = 0
+    try:
+        b = sb().storage.from_(bucket)
+        for _ in range(100):
+            items = b.list(folder, {"limit": 100, "offset": 0}) or []
+            names = [f"{folder}/{i['name']}" for i in items if i.get("name")]
+            if not names:
+                break
+            b.remove(names)
+            removed += len(names)
+            if len(items) < 100:
+                break
+    except Exception:
+        pass
+    return removed
+
+
 def load_df(ds: dict):
     """Load the cleaned table saved at upload time, restoring date columns."""
     p = sb().table("dataset_profiles").select("roles,columns").eq("dataset_id", ds["id"]).limit(1).execute()
